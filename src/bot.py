@@ -35,7 +35,7 @@ try:
 except:
     from user import User
 
-api_token = "6228494573:AAFLPnAbX32H-BenOny2dcgYloQVYJ6bm48"
+api_token = os.environ["API_TOKEN"]
 
 commands = {
     "menu": "Display this menu",
