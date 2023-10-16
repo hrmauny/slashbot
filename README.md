@@ -15,7 +15,7 @@
 [![Actions Status](https://github.com/mtkumar123/MyDollarBot/workflows/CI/badge.svg)](https://github.com/mtkumar123/MyDollarBot/actions)
 ![github workflow](https://github.com/mtkumar123/MyDollarBot/actions/workflows/black.yml/badge.svg)
 ![Discord](https://img.shields.io/discord/1163591668637896807?color=blueviolet&label=Discord%20Discussion%20Chat)
-![Lines of code](https://img.shields.io/tokei/lines/github/hrmauny/slashbot?color=9cf)
+![Lines of code](https://img.shields.io/tokei/lines/github/hrmauny/slashbot)
 ![Version](https://img.shields.io/github/v/release/secheaper/slashbot?color=ff69b4&label=Version)
 ![GitHub issues](https://img.shields.io/github/issues-raw/secheaper/slashbot)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/secheaper/slashbot)
