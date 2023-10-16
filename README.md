@@ -39,6 +39,8 @@ With simple commands, this bot allows you to:
 - Visualize your spendings in the form of graphs/pie chart using the /chart option
 - Email the history CSV file to yourself
 - See the total daily/monthly expenditure in different currencies
+- Get summary of your expenses and tips from AI
+- Upload Image and CSV to add your expsenses in bulk
 
 Check out the bot here: https://t.me/ncsuBot
 
@@ -51,6 +53,13 @@ Sample demos are shown below. They are run on a local machine.
 ---
 
 # :star: Whats New
+
+### Relase Version 1.2.2
+- New AI Chat feature added
+- New Feature to upload Image and CSV added
+- Fixed issue of CSV format in Email
+- Fixed cosmetic detail issue
+
 
 ### Release Version 1.2.1
 
@@ -110,7 +119,9 @@ Make sure you export the PYTHONPATH variable to the main project folder
 11. A successful run will generate a message on your terminal that says "TeleBot: Started polling." 
 12. Post this, navigate to your bot on Telegram, enter the "/start" or "/menu" command, and you are all set to track your expenses!
 
-For more info on deployment(Heroku), check out the doc [here](https://github.com/mtkumar123/MyDollarBot/blob/main/CONTRIBUTING.md#more-tips-for-developers)
+Notes:
+If you get the error ModuleNotFoundError: No module named 'src.user'; 'src' is not a package, add the absolute path to the main project folder to python path export PYTHONPATH="${PYTHONPATH}:/path/to/your/project/" and try again. (You'll have to re-add if you close the terminal or add to the environment variables.)
+You will have to install tessarect to work with Pytessarect. Also add path to tessarect in PATH variable.
 
 
 ## 💻For testing with Pytest
