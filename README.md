@@ -14,7 +14,7 @@
 [![codecov](https://codecov.io/gh/secheaper/slashbot/branch/main/graph/badge.svg?token=YCKWZTHO7O)](https://codecov.io/gh/secheaper/slashbot)
 [![Actions Status](https://github.com/mtkumar123/MyDollarBot/workflows/CI/badge.svg)](https://github.com/mtkumar123/MyDollarBot/actions)
 ![github workflow](https://github.com/mtkumar123/MyDollarBot/actions/workflows/black.yml/badge.svg)
-![Discord](https://img.shields.io/discord/879343473940107264?color=blueviolet&label=Discord%20Discussion%20Chat)
+![Discord](https://img.shields.io/discord/1163591668637896807?color=blueviolet&label=Discord%20Discussion%20Chat)
 ![Lines of code](https://img.shields.io/tokei/lines/github/secheaper/slashbot?color=9cf)
 ![Version](https://img.shields.io/github/v/release/secheaper/slashbot?color=ff69b4&label=Version)
 ![GitHub issues](https://img.shields.io/github/issues-raw/secheaper/slashbot)
