@@ -48,8 +48,8 @@ commands = {
     "display": "Show sum of expenditure for the current day/month",
     "history": "Display spending history",
     "delete": "Clear/Erase all your records",
-    "edit": "Edit/Change spending details",
     "readCSV": "Read CSV file",
+    "edit": "Edit/Change spending details",
     "budget": "Set budget for the month",
     "chart": "See your expenditure in different charts",
     "categoryAdd": "Add a new custom category",
@@ -136,14 +136,18 @@ def chatGPT_int(message):
         bot.reply_to(message, str(ex))
 
 
-# added by Jay for chatbot integration
-
 # added by Jay for Image to text integration
-@bot.message_handler(content_types=["document"])
+@bot.message_handler(commands=["ImageOCR"])
+def imageOCR_wrap(message):
+    chat_id = str(message.chat.id)
+    bot.send_message(chat_id, 'Upload your image')
+    bot.register_next_step_handler(message, imageOCR)
+
+
 def imageOCR(message):
     try:
-        # Your existing code for downloading the file
         chat_id = str(message.chat.id)
+        # Assuming the photo is the last item in the list of photos
         file_info = bot.get_file(message.document.file_id)
         downloaded_file = bot.download_file(file_info.file_path)
 
@@ -184,15 +188,13 @@ def imageOCR(message):
         for record in parsed_records:
             category = record['category']
             description = record['category']
-            #convert date to datetime object
+            # convert date to datetime object
             date = datetime.strptime(record['date'], "%m/%d/%y")
             debit = float(record['amount'])
             user_list[chat_id].create_rules_and_add_unknown_spending(
                 category, description, date, debit, chat_id
             )
-            # bot.delete_message(
-            #     chat_id=call.from_user.id, message_id=call.message.message_id
-            # )
+        bot.reply_to(message, "Processing complete. Your spending has been recorded.")
 
     except Exception as ex:
         print("Exception occurred : ")
@@ -224,7 +226,6 @@ def start_and_menu_command(m):
     ):  # generate help text out of the commands dictionary defined at the top
         text_intro += "/" + c + ": "
         text_intro += commands[c] + "\n\n"
-    bot.send_message(chat_id, text_intro)
 
 
 @bot.message_handler(commands=["budget"])
@@ -949,7 +950,16 @@ def edit_cost(message):
         return
 
 
-@bot.message_handler(content_types=["document"],commands=["readCSV"])
+# added by Jay as CSV Wrapper function
+@bot.message_handler(commands=["readCSV"])
+def readCSV_wrap(message):
+    chat_id = str(message.chat.id)
+    bot.send_message(chat_id, 'Upload your csv file')
+    bot.register_next_step_handler(message, handle_budget_document_csv)
+# added by Jay as CSV Wrapper function
+
+
+# @bot.message_handler(content_types=["document"])
 def handle_budget_document_csv(message):
     """
     This function is called if the user inputs a csv file that contains their budget in a csv format with column names
@@ -983,6 +993,8 @@ def handle_budget_document_csv(message):
                     telebot.types.InlineKeyboardButton(category, callback_data=callback)
                 )
             bot.send_message(chat_id, text, reply_markup=buttons)
+        bot.reply_to(message, "Processing complete. Your spending has been recorded.")
+
 
     except Exception as ex:
         print("Exception occurred : ")
@@ -1024,6 +1036,7 @@ def csv_callback(call):
         bot.delete_message(
             chat_id=call.from_user.id, message_id=call.message.message_id
         )
+
     except Exception as ex:
         print("Exception occurred : ")
         logger.error(str(ex), exc_info=True)
