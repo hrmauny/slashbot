@@ -5,4 +5,3 @@ tabulate
 forex-python
 hugchat
 pytesseract
-PIL
