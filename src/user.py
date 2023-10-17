@@ -30,6 +30,7 @@ class User:
         self.edit_category = {}
         self.monthly_budget = 0
         self.rules = {}
+        self.reminders= {}
 
         # for the calendar widget
         self.max_date = datetime.today() + timedelta(days=1)
@@ -39,6 +40,7 @@ class User:
 
         for category in self.spend_categories:
             self.transactions[category] = []
+            self.reminders[category] = []
             self.rules[category] = []
         self.save_user(userid)
 
@@ -93,6 +95,26 @@ class User:
         """
         try:
             self.transactions[category].append({"Date": date, "Value": value})
+            self.save_user(userid)
+
+        except Exception as e:
+            logger.error(str(e), exc_info=True)
+    def add_reminder(self, date, category, value, userid):
+        """
+        Stores the transaction to file.
+
+        :param date: date string of the transaction
+        :type: string
+        :param category: category of the transaction
+        :type: string
+        :param value: amount of the transaction
+        :type: string
+        :param userid: userid string which is also the file name
+        :type: string
+        :return: None
+        """
+        try:
+            self.reminders[category].append({"Date": date, "Value": value})
             self.save_user(userid)
 
         except Exception as e:
