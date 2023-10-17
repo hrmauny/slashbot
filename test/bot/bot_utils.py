@@ -15,8 +15,8 @@ import src.bot
 from src.user import User
 
 CHAT_ID = os.environ['CHAT_ID'] if 'CHAT_ID' in os.environ else 1
-TOKEN = os.environ['API_TOKEN'] if 'API_TOKEN' in os.environ else 0
-
+# TOKEN = os.environ['API_TOKEN'] if 'API_TOKEN' in os.environ else 0
+TOKEN = '5947713152:AAEVGD660t6d09D34DEQQ9R4ZqGd2X8UFzE'
 
 class BotTest(unittest.TestCase):
     """
