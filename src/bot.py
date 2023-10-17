@@ -79,6 +79,36 @@ completeSpendings = 0
 logger = logging.getLogger()
 
 
+@bot.message_handler(commands=["start", "menu"])
+def start_and_menu_command(m):
+    """
+    Handles the commands 'start' and 'menu'. Sends an intro text.
+
+    :param m: telebot.types.Message object representing the message object
+    :type: object
+    :return: None
+    """
+    chat_id = m.chat.id
+    print("*********************CHAT ID***************************", chat_id)
+    try:
+        text_intro = (
+            "Welcome to SlashBot - a simple solution to track your expenses! \nHere is a list of available "
+            "commands, please enter a command of your choice so that I can assist you further: \n\n "
+        )
+        for (
+                c
+        ) in (
+                commands
+        ):  # generate help text out of the commands dictionary defined at the top
+            text_intro += "/" + c + ": "
+            text_intro += commands[c] + "\n\n"
+        bot.send_message(chat_id, text_intro)
+    except Exception as ex:
+        print("Exception occurred : ")
+        logger.error(str(ex), exc_info=True)
+        bot.reply_to(m, str(ex))
+
+
 # added by Jay for chatbot integration
 @bot.message_handler(commands=["summary"])
 def chatGPT_int(message):
@@ -134,6 +164,7 @@ def chatGPT_int(message):
         print("Exception occurred : ")
         logger.error(str(ex), exc_info=True)
         bot.reply_to(message, str(ex))
+# added by Jay for chatbot integration
 
 
 # added by Jay for Image to text integration
@@ -161,7 +192,6 @@ def imageOCR(message):
 
         # Using Tesseract to do OCR on the image
         text = pytesseract.image_to_string(img)
-        print(text)
 
         # Split the extracted text into lines and remove empty lines
         lines = [line for line in text.split('\n') if line.strip()]
@@ -200,32 +230,7 @@ def imageOCR(message):
         print("Exception occurred : ")
         logger.error(str(ex), exc_info=True)
         bot.reply_to(message, "Processing Failed - Error: " + str(ex))
-
-
 # added by Jay for Image to text integration
-
-@bot.message_handler(commands=["start", "menu"])
-def start_and_menu_command(m):
-    """
-    Handles the commands 'start' and 'menu'. Sends an intro text.
-
-    :param m: telebot.types.Message object representing the message object
-    :type: object
-    :return: None
-    """
-    chat_id = m.chat.id
-    print("*********************CHAT ID***************************", chat_id)
-    text_intro = (
-        "Welcome to SlashBot - a simple solution to track your expenses! \nHere is a list of available "
-        "commands, please enter a command of your choice so that I can assist you further: \n\n "
-    )
-    for (
-            c
-    ) in (
-            commands
-    ):  # generate help text out of the commands dictionary defined at the top
-        text_intro += "/" + c + ": "
-        text_intro += commands[c] + "\n\n"
 
 
 @bot.message_handler(commands=["budget"])
