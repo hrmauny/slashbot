@@ -9,7 +9,7 @@ setup(
     author='CSC510 - Group 3',
     author_email='mydollarbot@gmail.com',
     url='https://github.com/hrmauny/slashbot/',
-    python_requires='>=3.9',
+    python_requires='>=3.8',
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
