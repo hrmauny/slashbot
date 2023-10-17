@@ -51,6 +51,7 @@ commands = {
     "categoryDelete": "Delete a category",
     "download": "Download your history",
     "monthly":"Monthly Expenditure Anaysis",
+    "weekly":"Weekly Expenditure Anaysis",
     "displayDifferentCurrency": "Display the sum of expenditures for the current day/month in another currency",
     "sendEmail": "Send an email with an attachment showing your history",
     "summary": "Show summary of your expenditure"   # added by Jay for chatbot integration
@@ -1360,7 +1361,25 @@ def command_monthly_report(message):
         except Exception as e:
             print("Exception occurred : ")
             logger.error(str(e), exc_info=True)
-            bot.reply_to(message, "Oops! - \nError : Could not create monthly analysis chart")   
+            bot.reply_to(message, "Oops! - \nError : Could not create monthly analysis chart") 
+
+@bot.message_handler(commands=["weekly"])
+def command_weekly_report(message):
+    chat_id = str(message.chat.id)
+    if chat_id not in user_list or user_list[chat_id].get_number_of_transactions() == 0:
+        bot.send_message(
+            chat_id, "Oops! Looks like you do not have any spending records!"
+        )
+    else:
+        try:
+            charts=user_list[chat_id].create_chart_for_weekly_analysis(chat_id)
+            for chart in charts:
+                with open(chart, "rb") as f:
+                    bot.send_photo(chat_id, f)
+        except Exception as e:
+            print("Exception occurred : ")
+            logger.error(str(e), exc_info=True)
+            bot.reply_to(message, "Oops! - \nError : Could not create weekly analysis chart") 
 
 @bot.message_handler(commands=["displayDifferentCurrency"])
 def command_display_currency(message):

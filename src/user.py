@@ -390,6 +390,7 @@ class User:
 
         return charts
     
+
     def create_chart_for_monthly_analysis(self,userid):
         total=[]
         result=[]
@@ -399,6 +400,7 @@ class User:
                 clone['Category']=category
                 total.append(clone)
 
+        #monthly total expense bar chart
         df=pd.DataFrame.from_dict(total)
         df1=df.groupby([df['Date'].dt.year.rename('year'), 
                    df['Date'].dt.month_name().rename('month')])['Value'].sum().reset_index()
@@ -410,7 +412,7 @@ class User:
         plt.savefig(fig_name1,bbox_inches="tight")
         result.append(fig_name1)
 
-
+        #monthly total expense bar chart grouped by category
         df2=df.groupby([df['Date'].dt.year.rename('year'), 
                    df['Date'].dt.month_name().rename('month'),df['Category']])['Value'].sum().reset_index()
         df2['month-year']=df2["year"].astype(str) +'_'+ df2["month"] 
@@ -428,7 +430,48 @@ class User:
         result.append(fig_name2)
         
         return result        
-    
+
+    def create_chart_for_weekly_analysis(self,userid):
+        total=[]
+        result=[]
+        for category,transaction_list in self.transactions.items():
+            for data in transaction_list:
+                clone=data.copy()
+                clone['Category']=category
+                total.append(clone)
+
+        #weekly total expense line chart
+        df=pd.DataFrame.from_dict(total)
+        df['week_number'] = df['Date'].dt.isocalendar().week
+        df1=df.groupby([df['week_number']])['Value'].sum().reset_index()
+        fig=plt.figure()
+        plt.plot(df1['week_number'].values,df1['Value'].values,marker="o")
+        plt.ylabel("Expenses")
+        plt.xlabel("Week Number")
+        fig_name1="data/{}_weekly_analysis.png".format(userid) 
+        plt.savefig(fig_name1,bbox_inches="tight")
+        result.append(fig_name1)
+
+        #monthly total expense line chart grouped by category
+        fig=plt.figure()
+        df=pd.DataFrame.from_dict(total)
+        for category in self.spend_categories:
+            df_category=df[df["Category"]==category]
+            print(df_category)
+            df_category['week_number'] = df_category['Date'].dt.isocalendar().week
+            df2=df_category.groupby([df_category['week_number']])['Value'].sum().reset_index()
+            plt.plot(df2['week_number'].values,df2['Value'].values,marker="o")
+        
+        plt.ylabel("Expenses")
+        plt.xlabel("Week Number")
+        fig_name2="data/{}_weekly_analysis_by_category.png".format(userid) 
+        plt.legend(self.spend_categories)
+        plt.savefig(fig_name2,bbox_inches="tight")
+        result.append(fig_name2)
+        return result 
+
+        
+
     def add_category(self, new_category, userid):
         """
         Stores the category to category list.
