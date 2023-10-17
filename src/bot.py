@@ -115,6 +115,11 @@ def start_and_menu_command(m):
 # added by Jay for chatbot integration
 @bot.message_handler(commands=["summary"])
 def chatGPT_int(message):
+    '''
+    This function is used to get the summary of the monthly expenditure.
+    :param message: telebot.types.Message object representing the message object
+    :return: None
+    '''
     # Log in to huggingface and grant authorization to huggingchat
     sign = Login('airtelbharti9004@gmail.com', 'J@yesh17598')
     cookies = sign.login()
@@ -173,6 +178,11 @@ def chatGPT_int(message):
 # added by Jay for Image to text integration
 @bot.message_handler(commands=["ImageOCR"])
 def imageOCR_wrap(message):
+    '''
+    This function is used to add expense using uploading image.
+    :param message: telebot.types.Message object representing the message object
+    :return: None
+    '''
     chat_id = str(message.chat.id)
     bot.send_message(chat_id, 'Upload your image')
     bot.register_next_step_handler(message, imageOCR)
