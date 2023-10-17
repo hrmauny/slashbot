@@ -3,5 +3,5 @@ pandas
 matplotlib==3.4.3
 tabulate
 forex-python
-hugchat
+hugchat==0.3.5
 pytesseract
