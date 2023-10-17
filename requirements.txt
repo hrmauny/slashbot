@@ -3,3 +3,6 @@ pandas
 matplotlib==3.4.3
 tabulate
 forex-python
+hugchat
+pytesseract (Need to add tesseract to PATH)
+PIL
