@@ -29,6 +29,12 @@ from hugchat import hugchat
 from hugchat.login import Login
 # added by Jay for chatbot integration
 
+# added by Jay for Image to text integration
+import pytesseract
+from PIL import Image
+
+# added by Jay for Image to text integration
+
 # sys.path.append("/Users/jayesh/Documents/GitHub/slashbot/src")
 try:
     from user import User
@@ -43,6 +49,7 @@ commands = {
     "display": "Show sum of expenditure for the current day/month",
     "history": "Display spending history",
     "delete": "Clear/Erase all your records",
+    "readCSV": "Read CSV file",
     "edit": "Edit/Change spending details",
     "budget": "Set budget for the month",
     "chart": "See your expenditure in different charts",
@@ -54,7 +61,8 @@ commands = {
     "weekly":"Weekly Expenditure Anaysis",
     "displayDifferentCurrency": "Display the sum of expenditures for the current day/month in another currency",
     "sendEmail": "Send an email with an attachment showing your history",
-    "summary": "Show summary of your expenditure"   # added by Jay for chatbot integration
+    "summary": "Show summary of your expenditure",  # added by Jay for chatbot integration
+    "ImageOCR": "Convert image to text"  # added by Jay for Image to text integration
 }
 
 c = CurrencyRates()
@@ -72,6 +80,37 @@ completeSpendings = 0
 # added by Jay for chatbot integration
 
 logger = logging.getLogger()
+
+
+@bot.message_handler(commands=["start", "menu"])
+def start_and_menu_command(m):
+    """
+    Handles the commands 'start' and 'menu'. Sends an intro text.
+
+    :param m: telebot.types.Message object representing the message object
+    :type: object
+    :return: None
+    """
+    chat_id = m.chat.id
+    print("*********************CHAT ID***************************", chat_id)
+    try:
+        text_intro = (
+            "Welcome to SlashBot - a simple solution to track your expenses! \nHere is a list of available "
+            "commands, please enter a command of your choice so that I can assist you further: \n\n "
+        )
+        for (
+                c
+        ) in (
+                commands
+        ):  # generate help text out of the commands dictionary defined at the top
+            text_intro += "/" + c + ": "
+            text_intro += commands[c] + "\n\n"
+        bot.send_message(chat_id, text_intro)
+    except Exception as ex:
+        print("Exception occurred : ")
+        logger.error(str(ex), exc_info=True)
+        bot.reply_to(m, str(ex))
+
 
 # added by Jay for chatbot integration
 @bot.message_handler(commands=["summary"])
@@ -130,29 +169,71 @@ def chatGPT_int(message):
         bot.reply_to(message, str(ex))
 # added by Jay for chatbot integration
 
-@bot.message_handler(commands=["start", "menu"])
-def start_and_menu_command(m):
-    """
-    Handles the commands 'start' and 'menu'. Sends an intro text.
 
-    :param m: telebot.types.Message object representing the message object
-    :type: object
-    :return: None
-    """
-    chat_id = m.chat.id
-    print("*********************CHAT ID***************************", chat_id)
-    text_intro = (
-        "Welcome to SlashBot - a simple solution to track your expenses! \nHere is a list of available "
-        "commands, please enter a command of your choice so that I can assist you further: \n\n "
-    )
-    for (
-            c
-    ) in (
-            commands
-    ):  # generate help text out of the commands dictionary defined at the top
-        text_intro += "/" + c + ": "
-        text_intro += commands[c] + "\n\n"
-    bot.send_message(chat_id, text_intro)
+# added by Jay for Image to text integration
+@bot.message_handler(commands=["ImageOCR"])
+def imageOCR_wrap(message):
+    chat_id = str(message.chat.id)
+    bot.send_message(chat_id, 'Upload your image')
+    bot.register_next_step_handler(message, imageOCR)
+
+
+def imageOCR(message):
+    try:
+        chat_id = str(message.chat.id)
+        # Assuming the photo is the last item in the list of photos
+        file_info = bot.get_file(message.document.file_id)
+        downloaded_file = bot.download_file(file_info.file_path)
+
+        # Save the downloaded file
+        image_path = "data/{}_spending.png".format(chat_id)
+        with open(image_path, mode="wb") as f:
+            f.write(downloaded_file)
+
+        # Process the image with OCR
+        img = Image.open(image_path)
+
+        # Using Tesseract to do OCR on the image
+        text = pytesseract.image_to_string(img)
+
+        # Split the extracted text into lines and remove empty lines
+        lines = [line for line in text.split('\n') if line.strip()]
+
+        # Check if the text has a tabular format or a multiline format with headers
+        if 'Category' in lines[0] and 'Date' in lines[0] and 'Amount' in lines[0]:
+            # Tabular format
+            header_index = lines.index('Category Date Amount')
+            data_lines = lines[header_index + 1:]
+            records = [line.split() for line in data_lines]
+        else:
+            # Multiline format
+            lines = lines[3:] if lines[0] == 'Category' else lines  # Check and remove headers if present
+            records = [lines[i:i + 3] for i in range(0, len(lines), 3)]
+
+        # Extracting data from each record
+        parsed_records = []
+        for record in records:
+            if len(record) == 3:
+                category, date, amount = record
+                parsed_records.append({'category': category, 'date': date, 'amount': amount})
+
+        # Printing the extracted data for each record
+        for record in parsed_records:
+            category = record['category']
+            description = record['category']
+            # convert date to datetime object
+            date = datetime.strptime(record['date'], "%m/%d/%y")
+            debit = float(record['amount'])
+            user_list[chat_id].create_rules_and_add_unknown_spending(
+                category, description, date, debit, chat_id
+            )
+        bot.reply_to(message, "Processing complete. Your spending has been recorded.")
+
+    except Exception as ex:
+        print("Exception occurred : ")
+        logger.error(str(ex), exc_info=True)
+        bot.reply_to(message, "Processing Failed - Error: " + str(ex))
+# added by Jay for Image to text integration
 
 
 @bot.message_handler(commands=["budget"])
@@ -877,7 +958,16 @@ def edit_cost(message):
         return
 
 
-@bot.message_handler(content_types=["document"])
+# added by Jay as CSV Wrapper function
+@bot.message_handler(commands=["readCSV"])
+def readCSV_wrap(message):
+    chat_id = str(message.chat.id)
+    bot.send_message(chat_id, 'Upload your csv file')
+    bot.register_next_step_handler(message, handle_budget_document_csv)
+# added by Jay as CSV Wrapper function
+
+
+# @bot.message_handler(content_types=["document"])
 def handle_budget_document_csv(message):
     """
     This function is called if the user inputs a csv file that contains their budget in a csv format with column names
@@ -911,6 +1001,8 @@ def handle_budget_document_csv(message):
                     telebot.types.InlineKeyboardButton(category, callback_data=callback)
                 )
             bot.send_message(chat_id, text, reply_markup=buttons)
+        bot.reply_to(message, "Processing complete. Your spending has been recorded.")
+
 
     except Exception as ex:
         print("Exception occurred : ")
@@ -952,6 +1044,7 @@ def csv_callback(call):
         bot.delete_message(
             chat_id=call.from_user.id, message_id=call.message.message_id
         )
+
     except Exception as ex:
         print("Exception occurred : ")
         logger.error(str(ex), exc_info=True)
