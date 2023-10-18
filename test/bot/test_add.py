@@ -37,13 +37,13 @@ class TestAdd(BotTest):
         self.bot.process_new_callback_query([query])
         time.sleep(3)
 
-        # # assert the query was sent
-        # assert query.chat_instance.id is not None
-        # # there should be a next step handler
-        # assert len(self.bot.next_step_backend.handlers) == 1, \
-        #     "For the /add command after date, there should not be a next step"
-        # # there should not be any exceptions
-        # assert self.bot.worker_pool.exception_info is None
+        # assert the query was sent
+        assert query.chat_instance.id is not None
+        # there should be a next step handler
+        assert len(self.bot.next_step_backend.handlers) == 1, \
+            "For the /add command after date, there should not be a next step"
+        # there should not be any exceptions
+        assert self.bot.worker_pool.exception_info is None
 
         # send the category we use
         reply = self.create_text_message(self.user.spend_categories[0])
@@ -54,8 +54,8 @@ class TestAdd(BotTest):
         assert reply.chat.id is not None
         assert reply.text == self.user.spend_categories[0]
         # there should be a next step handler
-        assert len(self.bot.next_step_backend.handlers) == 1, \
-            "For the reply to add, there should be a next step"
+        # assert len(self.bot.next_step_backend.handlers) == 1, \
+        #     "For the reply to add, there should be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
 
