@@ -234,9 +234,9 @@ I want to send myself an email for the monthly expenditure
 3. Type the intended email address
 4. You will get an email with the history file as attachment
 
-### SendEmail 
+### Summary 
 
-I want to send myself an email for the monthly expenditure
+I want to see summary and need tips on how to manage my finance based on my expense.
 
 
 <p align="center"><img width="700" src="./docs/workflows/summary.gif"></p>
