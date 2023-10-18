@@ -479,7 +479,6 @@ class User:
         df=pd.DataFrame.from_dict(total)
         for category in self.spend_categories:
             df_category=df[df["Category"]==category]
-            print(df_category)
             df_category['week_number'] = df_category['Date'].dt.isocalendar().week
             df2=df_category.groupby([df_category['week_number']])['Value'].sum().reset_index()
             plt.plot(df2['week_number'].values,df2['Value'].values,marker="o")

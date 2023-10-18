@@ -1701,6 +1701,12 @@ def get_users():
 
 @bot.message_handler(commands=["monthly"])
 def command_monthly_report(message):
+    """
+    Displays Monthly user expenditure bar chart with and without category wise grouping.
+
+    :return: None (Sends image to bot)
+    """
+     
     chat_id = str(message.chat.id)
     if chat_id not in user_list or user_list[chat_id].get_number_of_transactions() == 0:
         bot.send_message(
@@ -1719,6 +1725,11 @@ def command_monthly_report(message):
 
 @bot.message_handler(commands=["weekly"])
 def command_weekly_report(message):
+    """
+    Displays Weekly user expenditure line chart with and without category wise grouping.
+
+    :return: None (Sends image to bot)
+    """
     chat_id = str(message.chat.id)
     if chat_id not in user_list or user_list[chat_id].get_number_of_transactions() == 0:
         bot.send_message(
