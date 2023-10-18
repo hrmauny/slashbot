@@ -244,6 +244,16 @@ I want to see summary and need tips on how to manage my finance based on my expe
 1. Enter the `/summary` command.
 3. You will receive AI Generated response about your spendings and how you can manage budget for rest of the month.
 
+### Adding transactions from Image
+
+I want to add transactions from a Image my seller gave me.
+
+<p align="center"><img width="700" src="./docs/workflows/ocr.gif"></p>
+
+
+1. Enter '/Image' command
+2. Upload your Image in uncompressed format.
+
 # :grey_question: Documentation
 
 Thorough documentation of all methods and classes can be found at [Github Pages](https://mtkumar123.github.io/MyDollarBot/)
