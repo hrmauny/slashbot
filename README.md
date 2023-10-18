@@ -57,6 +57,8 @@ Sample demos are shown below. They are run on a local machine.
 ### Relase Version 1.2.2
 - New AI Chat feature added
 - New Feature to upload Image and CSV added
+- New Feature to visualise montly expenditure
+- New Feature to visualise weekly expenditure
 - Fixed issue of CSV format in Email
 - Fixed cosmetic detail issue
 
