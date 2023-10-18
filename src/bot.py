@@ -325,7 +325,7 @@ def command_billlreminder(message):
 
 
 def is_billreminder_callback(query):
-    return query.data != "none" and "/" not in query.data
+    return query.data != "none" and "/" not in query.data and datetime.strptime(query.data, "%Y,%m,%d").date() >= datetime.today().date()
 
 
 @bot.callback_query_handler(func=is_billreminder_callback, filter=None)
@@ -577,7 +577,7 @@ def command_add(message):
 
 
 def is_add_callback(query):
-    return query.data != "none" and "/" not in query.data
+    return query.data != "none" and "/" not in query.data and datetime.strptime(query.data, "%Y,%m,%d").date() <= datetime.today().date()
 
 
 @bot.callback_query_handler(func=is_add_callback, filter=None)
