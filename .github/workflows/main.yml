@@ -55,8 +55,8 @@ jobs:
           pip install pylint
       - name: Run tests
         env:
-          API_TOKEN: ${{ secrets.API_TOKEN }}
-          CHAT_ID: ${{ secrets.CHAT_ID }}
+          API_TOKEN: '5947713152:AAEVGD660t6d09D34DEQQ9R4ZqGd2X8UFzE' #${{ secrets.API_TOKEN }}
+          CHAT_ID: '2129133600' #${{ secrets.CHAT_ID }}
         run: |
           export PYTHONPATH=src
           python -m pytest -v --cov=src/ --cov-report=xml
