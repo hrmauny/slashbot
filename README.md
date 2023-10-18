@@ -254,6 +254,16 @@ I want to add transactions from a Image my seller gave me.
 1. Enter '/Image' command
 2. Upload your Image in uncompressed format.
 
+### Weekly Analysis of Expenditure
+
+I want to add transactions from a Image my seller gave me.
+
+<p align="center"><img width="700" src="./docs/workflows/weekly.gif"></p>
+
+
+1. Check first if there are historical transaction using `/history`
+2. Enter `/weekly` to get two line charts depicting weekly expenditure with and without categories.
+
 # :grey_question: Documentation
 
 Thorough documentation of all methods and classes can be found at [Github Pages](https://mtkumar123.github.io/MyDollarBot/)
