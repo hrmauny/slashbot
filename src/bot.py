@@ -61,7 +61,8 @@ commands = {
     "weekly":"Weekly Expenditure Anaysis",
     "displayDifferentCurrency": "Display the sum of expenditures for the current day/month in another currency",
     "sendEmail": "Send an email with an attachment showing your history",
-    "summary": "Show summary of your expenditure"   # added by Jay for chatbot integration
+    "summary": "Show summary of your expenditure",   # added by Jay for chatbot integration
+    "Image": "Add expense by converting image to text"  # added by Jay for Image to text integration
 }
 
 c = CurrencyRates()
@@ -175,7 +176,7 @@ def chatGPT_int(message):
 
 
 # added by Jay for Image to text integration
-@bot.message_handler(commands=["ImageOCR"])
+@bot.message_handler(commands=["Image"])
 def imageOCR_wrap(message):
     '''
     This function is used to add expense using uploading image.
