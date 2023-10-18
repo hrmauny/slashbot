@@ -256,7 +256,7 @@ I want to add transactions from a Image my seller gave me.
 
 ### Weekly Analysis of Expenditure
 
-I want to add transactions from a Image my seller gave me.
+I want to visualize my weekly expenditure.
 
 <p align="center"><img width="700" src="./docs/workflows/weekly.gif"></p>
 
@@ -264,6 +264,15 @@ I want to add transactions from a Image my seller gave me.
 1. Check first if there are historical transaction using `/history`
 2. Enter `/weekly` to get two line charts depicting weekly expenditure with and without categories.
 
+### Monthly Analysis of Expenditure
+
+I want to visualize my monthly expenditure.
+
+<p align="center"><img width="700" src="./docs/workflows/monthly.gif"></p>
+
+
+1. Check first if there are historical transaction using `/history`
+2. Enter `/monthly` to get two line charts depicting monthly expenditure with and without categories.
 # :grey_question: Documentation
 
 Thorough documentation of all methods and classes can be found at [Github Pages](https://mtkumar123.github.io/MyDollarBot/)
