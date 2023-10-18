@@ -65,11 +65,6 @@ commands = {
     "Image": "Add expense by converting image to text"  # added by Jay for Image to text integration
 }
 
-c = CurrencyRates()
-DOLLARS_TO_RUPEES = c.get_rate('USD', 'INR')
-DOLLARS_TO_EUROS = c.get_rate('USD', 'EUR')
-DOLLARS_TO_SWISS_FRANC = c.get_rate('USD', 'CHF')
-
 # added by Jay for chatbot integration
 bot = telebot.TeleBot(api_token)
 telebot.logger.setLevel(logging.INFO)
@@ -1869,6 +1864,16 @@ def display_total_currency(message):
 def display_total_currency2(message):
     try:
         # chat_id = str(message.chat.id)
+        c = CurrencyRates()
+        try:
+            DOLLARS_TO_RUPEES = c.get_rate('USD', 'INR')
+            DOLLARS_TO_EUROS = c.get_rate('USD', 'EUR')
+            DOLLARS_TO_SWISS_FRANC = c.get_rate('USD', 'CHF')
+        except:
+            DOLLARS_TO_RUPEES = 84
+            DOLLARS_TO_EUROS = 0.95
+            DOLLARS_TO_SWISS_FRANC = 0.9
+
         selection = message.text
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
         markup.row_width = 2
