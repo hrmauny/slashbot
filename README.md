@@ -234,6 +234,16 @@ I want to send myself an email for the monthly expenditure
 3. Type the intended email address
 4. You will get an email with the history file as attachment
 
+### SendEmail 
+
+I want to send myself an email for the monthly expenditure
+
+
+<p align="center"><img width="700" src="./docs/workflows/summary.gif"></p>
+
+1. Enter the `/summary` command.
+3. You will receive AI Generated response about your spendings and how you can manage budget for rest of the month.
+
 # :grey_question: Documentation
 
 Thorough documentation of all methods and classes can be found at [Github Pages](https://mtkumar123.github.io/MyDollarBot/)
