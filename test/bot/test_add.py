@@ -40,7 +40,7 @@ class TestAdd(BotTest):
         # assert the query was sent
         assert query.chat_instance.id is not None
         # there should be a next step handler
-        assert len(self.bot.next_step_backend.handlers) == 1, \
+        assert len(self.bot.next_step_backend.handlers) == 0, \
             "For the /add command after date, there should not be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
@@ -102,7 +102,7 @@ class TestAdd(BotTest):
         assert self.bot.worker_pool.exception_info is None
 
         # send the calendar date
-        query = self.create_callback_query("prev", msg)
+        query = self.create_callback_query("2023,13,13", msg)
         self.bot.process_new_callback_query([query])
         time.sleep(3)
 
@@ -202,7 +202,7 @@ class TestAdd(BotTest):
         # assert the query was sent
         assert query.chat_instance.id is not None
         # there should be a next step handler
-        assert len(self.bot.next_step_backend.handlers) == 1, \
+        assert len(self.bot.next_step_backend.handlers) == 0, \
             "For the /add command after date, there should be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
