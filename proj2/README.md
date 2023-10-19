@@ -3,4 +3,4 @@
 ### Slash Bot
 
 ## Video Link
-[Slashbot Application Demo with Latest changes](hhttps://www.youtube.com/watch?v=YLBqP0q3jUM) 
+[Slashbot Application Demo with Latest changes](https://www.youtube.com/watch?v=YLBqP0q3jUM) 
