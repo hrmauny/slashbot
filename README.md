@@ -60,6 +60,7 @@ Sample demos are shown below. They are run on a local machine.
 - New Feature to visualise montly expenditure
 - New Feature to visualise weekly expenditure
 - Fixed issue of CSV format in Email
+- Dynamic currency exchange rates added
 - Fixed cosmetic detail issue
 
 
