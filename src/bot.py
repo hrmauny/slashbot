@@ -76,6 +76,16 @@ completeSpendings = 0
 
 logger = logging.getLogger()
 
+c = CurrencyRates()
+try:
+    DOLLARS_TO_RUPEES = c.get_rate('USD', 'INR')
+    DOLLARS_TO_EUROS = c.get_rate('USD', 'EUR')
+    DOLLARS_TO_SWISS_FRANC = c.get_rate('USD', 'CHF')
+except:
+    DOLLARS_TO_RUPEES = 84
+    DOLLARS_TO_EUROS = 0.95
+    DOLLARS_TO_SWISS_FRANC = 0.9
+
 
 @bot.message_handler(commands=["start", "menu"])
 def start_and_menu_command(m):
@@ -1864,16 +1874,6 @@ def display_total_currency(message):
 def display_total_currency2(message):
     try:
         # chat_id = str(message.chat.id)
-        c = CurrencyRates()
-        try:
-            DOLLARS_TO_RUPEES = c.get_rate('USD', 'INR')
-            DOLLARS_TO_EUROS = c.get_rate('USD', 'EUR')
-            DOLLARS_TO_SWISS_FRANC = c.get_rate('USD', 'CHF')
-        except:
-            DOLLARS_TO_RUPEES = 84
-            DOLLARS_TO_EUROS = 0.95
-            DOLLARS_TO_SWISS_FRANC = 0.9
-
         selection = message.text
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
         markup.row_width = 2
