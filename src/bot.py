@@ -1860,7 +1860,7 @@ def display_total_currency(message):
             global completeSpendings  # pylint: disable=global-statement
             completeSpendings = total_value
             choice = bot.reply_to(
-                message, "Which currency to you want to covert to?", reply_markup=markup
+                message, "Which currency to you want to convert to?", reply_markup=markup
             )
             bot.register_next_step_handler(choice, display_total_currency2)
             # bot.send_message(chat_id, total_spendings)
