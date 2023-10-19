@@ -288,7 +288,7 @@ Our ideas for new features that can be implemented to make this project better c
 
 :heart: Acknowledgements
 ---
-We would like to thank Dr. Timothy Menzies for helping us understand the process of building a good Software Engineering project. We would also like to thank the teaching assistants Xiao Ling, Andre Lustosa, Kewen Peng, Weichen Shi for their support throughout the project.
+We would like to thank Dr. Timothy Menzies for helping us understand the process of building a good Software Engineering project. We would also like to thank the teaching assistants for their support throughout the project.
 
 
 :page_facing_up: License
@@ -301,11 +301,10 @@ This project is licensed under the terms of the MIT license. Please check [Licen
 
 <table>
   <tr>
-    <td align="center"><a href="http://www.shubhammankar.com/"><img src="https://avatars.githubusercontent.com/u/29366125?v=4" width="75px;" alt=""/><br /><sub><b>Shubham Mankar</b></sub></a></td>
-    <td align="center"><a href="https://github.com/pratikdevnani"><img src="https://avatars.githubusercontent.com/u/43350493?v=4" width="75px;" alt=""/><br /><sub><b>Pratik Devnani</b></sub></a><br /></td>
-    <td align="center"><a href="https://github.com/moksh98"><img src="https://avatars.githubusercontent.com/u/29693765?v=4" width="75px;" alt=""/><br /><sub><b>Moksh Jain</b></sub></a><br /></td>
-    <td align="center"><a href="https://rahilsarvaiya.tech/"><img src="https://avatars0.githubusercontent.com/u/32304956?v=4" width="75px;" alt=""/><br /><sub><b>Rahil Sarvaiya</b></sub></a><br /></td>
-    <td align="center"><a href="https://github.com/annie0467"><img src="https://avatars.githubusercontent.com/u/17164255?v=4" width="75px;" alt=""/><br /><sub><b>Anushi Keswani</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/JayProngs"><img src="https://avatars.githubusercontent.com/u/38587156?v=4" width="75px;" alt=""/><br /><sub><b>Jayesh Thakur</b></sub></a></td>
+    <td align="center"><a href="https://github.com/hrmauny"><img src="https://avatars.githubusercontent.com/u/142813992?v=4" width="75px;" alt=""/><br /><sub><b>Harsh Mauny</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/sagar110599"><img src="https://avatars.githubusercontent.com/u/46983757?v=4" width="75px;" alt=""/><br /><sub><b>Sagar Dama</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/ssawant3"><img src="https://avatars.githubusercontent.com/u/143014992?v=4" width="75px;" alt=""/><br /><sub><b>Soham Sawant</b></sub></a><br /></td>
   </tr>
 </table>
 
@@ -313,4 +312,4 @@ This project is licensed under the terms of the MIT license. Please check [Licen
 
 # :calling: Support
 
-For any support, email us at mydollarbot@gmail.com/ secheaper@gmail.com
+For any support, email us at bucksbotncsu@gmail.com/ mydollarbot@gmail.com/ secheaper@gmail.com
