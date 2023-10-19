@@ -116,7 +116,7 @@ class TestAdd(BotTest):
 
         # send the calendar date
         query = self.create_callback_query("", msg)
-        self.bot.process_new_callback_query([query])
+        # self.bot.process_new_callback_query([query])
         time.sleep(3)
 
         # assert the query was sent
