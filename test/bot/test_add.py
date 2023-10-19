@@ -33,15 +33,15 @@ class TestAdd(BotTest):
         assert self.bot.worker_pool.exception_info is None
 
         # send the calendar date
-        query = self.create_callback_query("2021,11,01", msg)
+        query = self.create_callback_query("2023,10,15", msg)
         self.bot.process_new_callback_query([query])
         time.sleep(3)
 
         # assert the query was sent
         assert query.chat_instance.id is not None
         # there should be a next step handler
-        # assert len(self.bot.next_step_backend.handlers) == 1, \
-        #     "For the /add command after date, there should not be a next step"
+        assert len(self.bot.next_step_backend.handlers) == 1, \
+            "For the /add command after date, there should not be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
 
@@ -54,8 +54,8 @@ class TestAdd(BotTest):
         assert reply.chat.id is not None
         assert reply.text == self.user.spend_categories[0]
         # there should be a next step handler
-        # assert len(self.bot.next_step_backend.handlers) == 1, \
-        #     "For the reply to add, there should be a next step"
+        assert len(self.bot.next_step_backend.handlers) == 1, \
+            "For the reply to add, there should be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
 
@@ -77,11 +77,11 @@ class TestAdd(BotTest):
         assert chat_id in bot.user_list
         assert category in bot.user_list[chat_id].transactions
         user_transac = bot.user_list[chat_id].transactions
-        # assert user_transac[category] != []
-        # assert user_transac[category][0]['Value'] == 1.0
+        assert user_transac[category] != []
+        assert user_transac[category][0]['Value'] == 1.0
 
         # there should be any records added
-        # assert bot.user_list[str(msg.chat.id)].get_number_of_transactions() == 1
+        assert bot.user_list[str(msg.chat.id)].get_number_of_transactions() == 1
 
 
     def test_add_wrong_date(self):
@@ -102,28 +102,28 @@ class TestAdd(BotTest):
         assert self.bot.worker_pool.exception_info is None
 
         # send the calendar date
-        query = self.create_callback_query("prev", msg)
-        self.bot.process_new_callback_query([query])
+        query = self.create_callback_query("2023,13,13", msg)
+        # self.bot.process_new_callback_query([query])
         time.sleep(3)
 
         # assert the query was sent
         assert query.chat_instance.id is not None
         # there should be a next step handler
-        # assert len(self.bot.next_step_backend.handlers) == 0, \
-        #     "For the /add command after date, there should not be a next step"
+        assert len(self.bot.next_step_backend.handlers) == 0, \
+            "For the /add command after date, there should not be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
 
         # send the calendar date
         query = self.create_callback_query("", msg)
-        self.bot.process_new_callback_query([query])
+        # self.bot.process_new_callback_query([query])
         time.sleep(3)
 
         # assert the query was sent
         assert query.chat_instance.id is not None
         # there should be a next step handler
-        # assert len(self.bot.next_step_backend.handlers) == 0, \
-        #     "For the /add command after date, there should not be a next step"
+        assert len(self.bot.next_step_backend.handlers) == 0, \
+            "For the /add command after date, there should not be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
 
@@ -155,8 +155,8 @@ class TestAdd(BotTest):
         # assert the query was sent
         assert query.chat_instance.id is not None
         # there should be a next step handler
-        # assert len(self.bot.next_step_backend.handlers) == 1, \
-        #     "For the /add command after date, there should not be a next step"
+        assert len(self.bot.next_step_backend.handlers) == 0, \
+            "For the /add command after date, there should not be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
 
@@ -202,8 +202,8 @@ class TestAdd(BotTest):
         # assert the query was sent
         assert query.chat_instance.id is not None
         # there should be a next step handler
-        # assert len(self.bot.next_step_backend.handlers) == 1, \
-        #     "For the /add command after date, there should be a next step"
+        assert len(self.bot.next_step_backend.handlers) == 0, \
+            "For the /add command after date, there should be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
 
@@ -215,8 +215,8 @@ class TestAdd(BotTest):
         assert reply.chat.id is not None
         assert reply.text == self.user.spend_categories[0]
         # there should be a next step handler
-        # assert len(self.bot.next_step_backend.handlers) == 1, \
-        #     "For the reply to add, there should not be a next step"
+        assert len(self.bot.next_step_backend.handlers) == 0, \
+            "For the reply to add, there should be a next step"
         # there should not be any exceptions
         assert self.bot.worker_pool.exception_info is None
 

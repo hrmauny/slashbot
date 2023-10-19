@@ -62,13 +62,10 @@ commands = {
     "displayDifferentCurrency": "Display the sum of expenditures for the current day/month in another currency",
     "sendEmail": "Send an email with an attachment showing your history",
     "summary": "Show summary of your expenditure",   # added by Jay for chatbot integration
-    "Image": "Add expense by converting image to text"  # added by Jay for Image to text integration
-}
+    "Image": "Add expense by converting image to text" , # added by Jay for Image to text integration
+    "billreminder":"Add a bill reminder"
 
-c = CurrencyRates()
-DOLLARS_TO_RUPEES = c.get_rate('USD', 'INR')
-DOLLARS_TO_EUROS = c.get_rate('USD', 'EUR')
-DOLLARS_TO_SWISS_FRANC = c.get_rate('USD', 'CHF')
+}
 
 # added by Jay for chatbot integration
 bot = telebot.TeleBot(api_token)
@@ -80,6 +77,16 @@ completeSpendings = 0
 # added by Jay for chatbot integration
 
 logger = logging.getLogger()
+
+c = CurrencyRates()
+try:
+    DOLLARS_TO_RUPEES = c.get_rate('USD', 'INR')
+    DOLLARS_TO_EUROS = c.get_rate('USD', 'EUR')
+    DOLLARS_TO_SWISS_FRANC = c.get_rate('USD', 'CHF')
+except:
+    DOLLARS_TO_RUPEES = 84
+    DOLLARS_TO_EUROS = 0.95
+    DOLLARS_TO_SWISS_FRANC = 0.9
 
 
 @bot.message_handler(commands=["start", "menu"])
@@ -298,257 +305,6 @@ def post_budget_input(message):
 
     except Exception as ex:
         bot.reply_to(message, "Oh no. " + str(ex))
-
-@bot.message_handler(commands=["billreminder"])
-def command_billlreminder(message):
-    """
-    Handles the command 'add'. Lists the categories from which the user can select. The function
-    'post_category_selection' is called next. :param message: telebot.types.Message object representing the message
-    object
-
-    :param message: telebot.types.Message object representing the message object
-    :type: object
-    :return: None
-    """
-    chat_id = str(message.chat.id)
-    option.pop(chat_id, None)
-    if chat_id not in user_list.keys():
-        user_list[chat_id] = User(chat_id)
-    user = user_list[chat_id]
-    try:
-        markup = get_calendar_buttons(user)
-        bot.send_message(chat_id, "Click the date of purchase:", reply_markup=markup)
-    except Exception as ex:
-        print("Exception occurred : ")
-        logger.error(str(ex), exc_info=True)
-        bot.reply_to(message, "Processing Failed - \nError : " + str(ex))
-
-
-def is_billreminder_callback(query):
-    return query.data != "none" and "/" not in query.data and datetime.strptime(query.data, "%Y,%m,%d").date() > datetime.today().date()
-
-
-@bot.callback_query_handler(func=is_billreminder_callback, filter=None)
-def rpost_date_selection(message):
-    """
-    Once a date is selected, this function is called and queries the user to enter a category
-
-    :param message: the message sent after the user clicks a button
-    :return: None
-    """
-    chat_id = str(message.message.chat.id)
-    option.pop(chat_id, None)
-
-    try:
-        if chat_id not in user_list.keys():
-            user_list[chat_id] = User(chat_id)
-        user = user_list[chat_id]
-        # if they want to go back/forward a month
-        date_to_add = handler_callback(message.data, user)
-        if date_to_add is None:
-            # just edit the calendar
-            bot.edit_message_reply_markup(
-                chat_id=message.from_user.id,
-                message_id=message.message.message_id,
-                reply_markup=get_calendar_buttons(user),
-            )
-            return
-        if date_to_add == -1:
-            # invalid date
-            fmt_min, fmt_max = user.min_date.strftime(
-                "%m/%d/%Y"
-            ), user.max_date.strftime("%m/%d/%Y")
-            bot.send_message(
-                chat_id, "Enter a date between {} and {}".format(fmt_min, fmt_max)
-            )
-            return
-        spend_categories = user_list[chat_id].spend_categories
-        markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-        markup.row_width = 2
-        for c in spend_categories:
-            markup.add(c)
-        msg = bot.reply_to(message.message, "Select Category", reply_markup=markup)
-        bot.register_next_step_handler(msg, rpost_category_selection, date_to_add)
-
-    except Exception as ex:
-        print("Exception occurred : ")
-        logger.error(str(ex), exc_info=True)
-        bot.reply_to(message.message, "Processing Failed - \nError : " + str(ex))
-
-
-def rpost_category_selection(message, date_to_add):
-    """
-    Receives the category selected by the user and then asks for the amount spend. If an invalid category is given,
-    an error message is displayed followed by command list. IF the category given is valid, 'post_amount_input' is
-    called next.
-
-    :param message: telebot.types.Message object representing the message object
-    :param date_to_add: the date of the purchase
-    :type: object
-    :return: None
-    """
-    chat_id = str(message.chat.id)
-    try:
-        selected_category = message.text
-        spend_categories = user_list[chat_id].spend_categories
-        if selected_category not in spend_categories:
-            bot.send_message(
-                chat_id, "Invalid", reply_markup=types.ReplyKeyboardRemove()
-            )
-            raise Exception(
-                'Sorry I don\'t recognise this category "{}"!'.format(selected_category)
-            )
-
-        option[chat_id] = selected_category
-        message = bot.send_message(
-            chat_id,
-            "How much did you spend on {}? \n(Enter numeric values only)".format(
-                str(option[chat_id])
-            ),
-        )
-        bot.register_next_step_handler(message, rpost_amount_input, date_to_add)
-    except Exception as ex:
-        bot.reply_to(message, "Oh no! " + str(ex))
-        display_text = ""
-        for (
-                c
-        ) in (
-                commands
-        ):  # generate help text out of the commands dictionary defined at the top
-            display_text += "/" + c + ": "
-            display_text += commands[c] + "\n"
-        bot.send_message(chat_id, "Please select a menu option from below:")
-        bot.send_message(chat_id, display_text)
-
-
-def rpost_amount_input(message, date_of_entry):
-    """
-    Receives the amount entered by the user and then adds to transaction history. An error is displayed if the entered
-     amount is zero. Else, a message is shown that the transaction has been added.
-
-    :param date_of_entry: user entered date
-    :param message: telebot.types.Message object representing the message object
-    :type: object
-    :return: None
-    """
-    try:
-        chat_id = str(message.chat.id)
-        amount_entered = message.text
-        amount_value = user_list[chat_id].validate_entered_amount(
-            amount_entered
-        )  # validate
-        if amount_value == 0:  # cannot be $0 spending
-            raise Exception("Spent amount has to be a non-zero number.")
-
-        date_str, category_str, amount_str = (
-            date_of_entry.strftime("%m/%d/%Y %H:%M:%S"),
-            str(option[chat_id]),
-            format(amount_value, ".2f"),
-        )
-        x=[
-            date_of_entry.strftime("%m/%d/%Y %H:%M:%S"),
-            str(option[chat_id]),
-            format(amount_value, ".2f"),
-        ]
-        # user_list[chat_id].add_reminder(
-        #     date_of_entry, option[chat_id], amount_value, chat_id
-        # )
-        total_value = user_list[chat_id].monthly_total()
-        add_message = "The following reminder has been recorded: You have set a reminder of ${} for {} on {} and please enter you email id to send you reminder email".format(
-            amount_str, category_str, date_str
-        )
-        bot.send_message(chat_id, add_message)
-        bot.register_next_step_handler(message, rsend_email,x)
-        
-    except Exception as ex:
-        print("Exception occurred : ")
-        logger.error(str(ex), exc_info=True)
-        bot.reply_to(message, "Processing Failed - \nError : " + str(ex))
-
-# def is_billreminderemail_callback(query):
-#     return query.data != "none" and "/" not in query.data
-
-# @bot.callback_query_handler(func=is_billreminderemail_callback, filter=None)
-def rsend_email(message,x):
-    """
-    Handles the command 'sendEmail'. Sends and email with the csvFile.
-
-    :param message: telebot.types.Message object representing the message object
-    :type: object
-    :return: None
-    """
- 
-    try:
-      
-        
-        table = [["Category", "Date", "Amount in $"]]
-        table.append(x)
-        s = io.StringIO()
-        csv.writer(s).writerows(table)
-        s.seek(0)
-        buf = io.BytesIO()
-        buf.write(s.getvalue().encode())
-        buf.seek(0)
-        buf.name = "reminder.csv"
-        with open('reminder.csv', 'w', newline='') as file:
-                    writer = csv.writer(file)
-                    writer.writerows(table)
-            # bot.send_document(chat_id, buf)
-            # category = bot.reply_to(message, "Enter category name")
-        chat_id = str(message.chat.id)
-        # bot.send_message(chat_id, "Enter your email id")
-        email = message.text
-        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-        if (re.fullmatch(regex, email)):
-            mail_content = '''Hello,
-                This email has an attached copy of your expenditure history.
-                Thank you!
-                '''
-                # The mail addresses and password
-            sender_address = 'bucksbotncsu@gmail.com'
-            sender_pass = 'eevyhyshokfrrvkc'
-            receiver_address = email
-                # Setup the MIME
-            message = MIMEMultipart()
-            message['From'] = sender_address
-            message['To'] = receiver_address
-            message['Subject'] = 'Spending History document'
-            # The subject line
-            # The body and the attachments for the mail
-            message.attach(MIMEText(mail_content, 'plain'))
-            attach_file_name = "reminder.csv"
-            attach_file = open(attach_file_name, 'rb')
-            payload = MIMEApplication(attach_file.read(), Name=attach_file_name)
-            # payload.set_payload((attach_file).read())
-            encoders.encode_base64(payload)  # encode the attachment
-            # add payload header with filename
-            payload.add_header('Content-Decomposition', 'attachment', filename=attach_file_name)
-            message.attach(payload)
-            # Create SMTP session for sending the mail
-            session = smtplib.SMTP('smtp.gmail.com', 587)  # use gmail with port
-            session.starttls()  # enable security
-            session.login(sender_address, sender_pass)  # login with mail_id and password
-            text = message.as_string()
-            session.sendmail(sender_address, receiver_address, text)
-            session.quit()
-            bot.send_message(chat_id, 'Mail Sent')
-        else:
-            print("falut")
-            # bot.send_message(message.chat.id, 'incorrect email')
-
-
-    except Exception as ex:
-        logger.error(str(ex), exc_info=True)
-        bot.reply_to(message, str(ex))
-
-
-
-
-    
-        
-       
-
-
 
 
 @bot.message_handler(commands=["add"])
@@ -1855,7 +1611,7 @@ def display_total_currency(message):
             global completeSpendings  # pylint: disable=global-statement
             completeSpendings = total_value
             choice = bot.reply_to(
-                message, "Which currency to you want to covert to?", reply_markup=markup
+                message, "Which currency to you want to convert to?", reply_markup=markup
             )
             bot.register_next_step_handler(choice, display_total_currency2)
             # bot.send_message(chat_id, total_spendings)
