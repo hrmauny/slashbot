@@ -42,7 +42,7 @@ With simple commands, this bot allows you to:
 - Get summary of your expenses and tips from AI
 - Upload Image and CSV to add your expsenses in bulk
 
-Check out the bot here: https://t.me/ncsuBot
+Check out the bot here: [https://t.me/ncsuBot](https://t.me/BucksXYZ_bot)
 
 ---
 Sample demos are shown below. They are run on a local machine.
