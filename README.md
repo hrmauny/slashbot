@@ -9,7 +9,7 @@
 ![MIT license](https://img.shields.io/badge/License-MIT-green.svg)
 ![GitHub](https://img.shields.io/github/languages/top/secheaper/slashbot?color=red&label=Python&logo=Python&logoColor=yellow)
 ![GitHub contributors](https://img.shields.io/github/contributors/secheaper/slashbot)
-[![DOI](https://zenodo.org/badge/431190543.svg)](https://zenodo.org/badge/latestdoi/431190543)
+[![DOI](https://zenodo.org/badge/431190543.svg)](https://zenodo.org/doi/10.5281/zenodo.10023543)
 [![Platform](https://img.shields.io/badge/Platform-Telegram-blue)](https://desktop.telegram.org/)
 [![codecov](https://codecov.io/gh/secheaper/slashbot/branch/main/graph/badge.svg?token=YCKWZTHO7O)](https://codecov.io/gh/secheaper/slashbot)
 [![CI](https://github.com/hrmauny/slashbot/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/hrmauny/slashbot/actions/workflows/main.yml)
@@ -24,7 +24,7 @@
 
 ## Demo Video
 
-https://youtu.be/NBihyIU13pw
+https://www.youtube.com/watch?v=YLBqP0q3jUM
 
 ## About SlashBot
 
@@ -42,7 +42,7 @@ With simple commands, this bot allows you to:
 - Get summary of your expenses and tips from AI
 - Upload Image and CSV to add your expsenses in bulk
 
-Check out the bot here: https://t.me/ncsuBot
+Check out the bot here: https://t.me/BucksXYZ_bot
 
 ---
 Sample demos are shown below. They are run on a local machine.
@@ -60,6 +60,7 @@ Sample demos are shown below. They are run on a local machine.
 - New Feature to visualise montly expenditure
 - New Feature to visualise weekly expenditure
 - Fixed issue of CSV format in Email
+- Dynamic currency exchange rates added
 - Fixed cosmetic detail issue
 
 
@@ -288,7 +289,7 @@ Our ideas for new features that can be implemented to make this project better c
 
 :heart: Acknowledgements
 ---
-We would like to thank Dr. Timothy Menzies for helping us understand the process of building a good Software Engineering project. We would also like to thank the teaching assistants Xiao Ling, Andre Lustosa, Kewen Peng, Weichen Shi for their support throughout the project.
+We would like to thank Dr. Timothy Menzies for helping us understand the process of building a good Software Engineering project. We would also like to thank the teaching assistants for their support throughout the project.
 
 
 :page_facing_up: License
@@ -301,11 +302,10 @@ This project is licensed under the terms of the MIT license. Please check [Licen
 
 <table>
   <tr>
-    <td align="center"><a href="http://www.shubhammankar.com/"><img src="https://avatars.githubusercontent.com/u/29366125?v=4" width="75px;" alt=""/><br /><sub><b>Shubham Mankar</b></sub></a></td>
-    <td align="center"><a href="https://github.com/pratikdevnani"><img src="https://avatars.githubusercontent.com/u/43350493?v=4" width="75px;" alt=""/><br /><sub><b>Pratik Devnani</b></sub></a><br /></td>
-    <td align="center"><a href="https://github.com/moksh98"><img src="https://avatars.githubusercontent.com/u/29693765?v=4" width="75px;" alt=""/><br /><sub><b>Moksh Jain</b></sub></a><br /></td>
-    <td align="center"><a href="https://rahilsarvaiya.tech/"><img src="https://avatars0.githubusercontent.com/u/32304956?v=4" width="75px;" alt=""/><br /><sub><b>Rahil Sarvaiya</b></sub></a><br /></td>
-    <td align="center"><a href="https://github.com/annie0467"><img src="https://avatars.githubusercontent.com/u/17164255?v=4" width="75px;" alt=""/><br /><sub><b>Anushi Keswani</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/JayProngs"><img src="https://avatars.githubusercontent.com/u/38587156?v=4" width="75px;" alt=""/><br /><sub><b>Jayesh Thakur</b></sub></a></td>
+    <td align="center"><a href="https://github.com/hrmauny"><img src="https://avatars.githubusercontent.com/u/142813992?v=4" width="75px;" alt=""/><br /><sub><b>Harsh Mauny</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/sagar110599"><img src="https://avatars.githubusercontent.com/u/46983757?v=4" width="75px;" alt=""/><br /><sub><b>Sagar Dama</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/ssawant3"><img src="https://avatars.githubusercontent.com/u/143014992?v=4" width="75px;" alt=""/><br /><sub><b>Soham Sawant</b></sub></a><br /></td>
   </tr>
 </table>
 
@@ -313,4 +313,4 @@ This project is licensed under the terms of the MIT license. Please check [Licen
 
 # :calling: Support
 
-For any support, email us at mydollarbot@gmail.com/ secheaper@gmail.com
+For any support, email us at bucksbotncsu@gmail.com/ mydollarbot@gmail.com/ secheaper@gmail.com
