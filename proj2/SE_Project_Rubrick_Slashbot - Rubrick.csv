@@ -29,7 +29,7 @@ Evidence that the whole team is using the same tools: everyone can get to all to
 "Evidence that the whole team is using the same tools (e.g. config files in the repo, updated by lots of different people)",2,,CI pipelines executed after every change by dev after their respective changes
 "Evidence that the whole team is using the same tools (e.g. tutor can ask anyone to share screen, they demonstrate the system running on their computer)",3,,
 Evidence that the members of the team are working across multiple places in the code base,3,,
-Short release cycles,2,,(only one release cycle)
+Short release cycles,2,https://github.com/hrmauny/slashbot/blob/main/docs/Changes_V2.md,(only one release cycle)
 Total,79,,
 ,,,
 ,,,
