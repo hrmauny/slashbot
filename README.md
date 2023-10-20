@@ -22,8 +22,8 @@
 
 <hr>
 
-## Demo Video And Score Card
-https://docs.google.com/spreadsheets/d/1GrUfPCndv8hXHaRlLOxqqbE-DUb_0aa2FOuI0gagLp8/edit?usp=sharing
+## Demo Video
+
 https://www.youtube.com/watch?v=YLBqP0q3jUM
 
 ## About SlashBot
