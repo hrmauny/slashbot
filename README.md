@@ -9,7 +9,7 @@
 ![MIT license](https://img.shields.io/badge/License-MIT-green.svg)
 ![GitHub](https://img.shields.io/github/languages/top/secheaper/slashbot?color=red&label=Python&logo=Python&logoColor=yellow)
 ![GitHub contributors](https://img.shields.io/github/contributors/secheaper/slashbot)
-[![DOI](https://zenodo.org/badge/431190543.svg)](https://zenodo.org/badge/latestdoi/431190543)
+[![DOI](https://zenodo.org/badge/431190543.svg)](https://zenodo.org/doi/10.5281/zenodo.10023543)
 [![Platform](https://img.shields.io/badge/Platform-Telegram-blue)](https://desktop.telegram.org/)
 [![codecov](https://codecov.io/gh/secheaper/slashbot/branch/main/graph/badge.svg?token=YCKWZTHO7O)](https://codecov.io/gh/secheaper/slashbot)
 [![CI](https://github.com/hrmauny/slashbot/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/hrmauny/slashbot/actions/workflows/main.yml)
